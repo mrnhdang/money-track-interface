@@ -162,6 +162,7 @@ const Transaction = ({ transactions, setTransactions }: TransactionProps) => {
             colorPalette={'teal'}
             disabled={isNewTransaction}
             onClick={addNewRowTransaction}
+            style={{ zIndex: -1 }}
           >
             <AddIcon w={6} h={6} />
           </IconButton>
