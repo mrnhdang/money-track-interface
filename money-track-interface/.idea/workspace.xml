@@ -4,57 +4,45 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="555bd9b1-d465-4aa0-bd72-5ee5f6296045" name="Changes" comment="21/1/2025: Initialize project and authentication page (Login and Register)">
-      <change afterPath="$PROJECT_DIR$/.eslintrc.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/money-track-interface.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/prettier.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.prettierrc.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/favicon.ico" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/globals.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/layout.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/login/login.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/login/page.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/page.module.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/page.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/register/page.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/auth/LoginForm.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/auth/RegisterForm.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/ui/avatar.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/ui/button.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/ui/checkbox.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/ui/close-button.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/ui/color-mode.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/ui/dialog.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/ui/drawer.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/ui/field.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/ui/input-group.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/ui/password-input.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/ui/popover.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/ui/provider.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/ui/radio.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/ui/slider.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/ui/tooltip.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eslint.config.mjs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/hook/useAuthentication.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/next.config.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/file.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/globe.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/next.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/vercel.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/window.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" />
+    <list default="true" id="555bd9b1-d465-4aa0-bd72-5ee5f6296045" name="Changes" comment="7/2/2025: Update function for transaction process">
+      <change afterPath="$PROJECT_DIR$/app/track/layout.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/track/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/fragment/Header.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/member/MemberInfo.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/transaction/Transaction.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/ui/data-list.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/ui/link-button.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/ui/pagination.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/ui/toggle-tip.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mock.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/logo.webp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.eslintrc.json" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintrc.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.prettierrc.json" beforeDir="false" afterPath="$PROJECT_DIR$/.prettierrc.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/globals.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/login/login.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/login/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/login/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/register/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/register/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/ui/avatar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/ui/avatar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/ui/button.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/ui/button.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/ui/checkbox.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/ui/checkbox.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/ui/close-button.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/ui/close-button.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/ui/color-mode.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/ui/color-mode.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/ui/dialog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/ui/dialog.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/ui/drawer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/ui/drawer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/ui/field.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/ui/field.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/ui/input-group.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/ui/input-group.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/ui/password-input.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/ui/password-input.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/ui/popover.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/ui/popover.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/ui/provider.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/ui/provider.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/ui/radio.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/ui/radio.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/ui/slider.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/ui/slider.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/ui/tooltip.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/ui/tooltip.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eslint.config.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/eslint.config.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/next.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/next.config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,6 +59,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 7
@@ -82,29 +73,31 @@
     <option name="openDirectoriesWithSingleClick" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "C:/Users/huudang.nguyen_amari/Desktop/Github/money-track-interface/money-track-interface/components/auth",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "yarn",
-    "npm.dev.executor": "Run",
-    "prettierjs.PrettierConfiguration.Package": "C:\\Users\\huudang.nguyen_amari\\Desktop\\Github\\money-track-interface\\money-track-interface\\node_modules\\prettier",
-    "settings.editor.selected.configurable": "settings.javascript.prettier",
-    "ts.external.directory.path": "C:\\Users\\huudang.nguyen_amari\\Desktop\\Github\\money-track-interface\\money-track-interface\\node_modules\\typescript\\lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/huudang.nguyen_amari/Desktop/Github/money-track-interface/money-track-interface/components/auth&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
+    &quot;npm.dev.executor&quot;: &quot;Debug&quot;,
+    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;C:\\Users\\huudang.nguyen_amari\\Desktop\\Github\\money-track-interface\\money-track-interface\\node_modules\\prettier&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;settings.javascript.prettier&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\huudang.nguyen_amari\\Desktop\\Github\\money-track-interface\\money-track-interface\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\huudang.nguyen_amari\Desktop\Github\money-track-interface\money-track-interface\components\auth" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\huudang.nguyen_amari\Desktop\Github\money-track-interface\money-track-interface\components\transaction" />
       <recent name="C:\Users\huudang.nguyen_amari\Desktop\Github\money-track-interface\money-track-interface" />
     </key>
   </component>
@@ -144,8 +137,29 @@
       <workItem from="1737253958768" duration="3555000" />
       <workItem from="1737364230914" duration="6319000" />
       <workItem from="1737445367139" duration="5379000" />
-      <workItem from="1737450817782" duration="3556000" />
+      <workItem from="1737450817782" duration="3811000" />
+      <workItem from="1737468471179" duration="4843000" />
+      <workItem from="1737599135284" duration="2920000" />
+      <workItem from="1737627439742" duration="1137000" />
+      <workItem from="1737642091996" duration="2715000" />
+      <workItem from="1737694478660" duration="13030000" />
+      <workItem from="1738376834349" duration="921000" />
+      <workItem from="1738385670306" duration="7690000" />
+      <workItem from="1738574042816" duration="92000" />
+      <workItem from="1738574152633" duration="3028000" />
+      <workItem from="1738826668454" duration="2573000" />
+      <workItem from="1738829594216" duration="5647000" />
+      <workItem from="1738900357281" duration="10299000" />
     </task>
+    <task id="LOCAL-00001" summary="21/1/2025: Initialize project and authentication page (Login and Register)">
+      <option name="closed" value="true" />
+      <created>1737455563620</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1737455563620</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -153,6 +167,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="21/1/2025: Initialize project and authentication page (Login and Register)" />
-    <option name="LAST_COMMIT_MESSAGE" value="21/1/2025: Initialize project and authentication page (Login and Register)" />
+    <MESSAGE value="7/2/2025: Update function for transaction process" />
+    <option name="LAST_COMMIT_MESSAGE" value="7/2/2025: Update function for transaction process" />
   </component>
 </project>
