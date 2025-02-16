@@ -14,7 +14,7 @@ const Header = () => {
       paddingX={2}
       alignItems="center"
       width="100%"
-      z-index={1500}
+      style={{ zIndex: 1500 }}
     >
       <IconButton size={'xl'} p={1} colorPalette="teal" aria-label="Call support" rounded="full">
         <FaDollarSign />

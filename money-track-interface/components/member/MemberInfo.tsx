@@ -16,7 +16,7 @@ const MemberInfo = () => {
       >
         <Card.Root
           as={'div'}
-          style={{ zIndex: -1 }}
+          style={{ zIndex: 10 }}
           width={'max-content'}
           flexDirection="row"
           overflow="hidden"
@@ -41,7 +41,7 @@ const MemberInfo = () => {
         </Card.Root>
         <Card.Root
           as={'div'}
-          style={{ zIndex: -1 }}
+          style={{ zIndex: 10 }}
           width={'max-content'}
           flexDirection="row"
           overflow="hidden"
