@@ -4,15 +4,17 @@ import { Stack } from '@chakra-ui/react';
 import Transaction from '../../components/transaction/Transaction';
 import { useState } from 'react';
 import { MOCK_TRANSACTIONS } from '../../mock';
+import { useAuthentication } from '../../hook/useAuthentication';
 
 export type TransactionType = {
   id?: number;
   description?: string;
   transactionDatetime?: string;
-  amount?: number;
+  amount: number;
 };
 
 const TrackPage = () => {
+  const { authentication, setAuthentication } = useAuthentication();
   const [transactions, setTransactions] = useState<TransactionType[]>(MOCK_TRANSACTIONS);
   return (
     <Stack
@@ -26,7 +28,7 @@ const TrackPage = () => {
       width={'100%'}
       p={1}
     >
-      <MemberInfo />
+      <MemberInfo authentication={authentication} setAuthentication={setAuthentication} />
       <Transaction transactions={transactions} setTransactions={setTransactions} />
     </Stack>
   );

@@ -2,7 +2,7 @@ import { TransactionType } from './app/track/page';
 
 export const MOCK_TRANSACTIONS: TransactionType[] = [
   { id: 1, description: 'Rent', transactionDatetime: '2024-01-01T00:00:00Z', amount: 1200.0 },
-  { id: 2, description: 'Groceries', transactionDatetime: '2024-01-05T14:30:00Z', amount: 250.75 },
+  { id: 2, description: 'Groceries', transactionDatetime: '2024-01-05T14:30:00Z', amount: -250.75 },
   {
     id: 3,
     description: 'Electricity Bill',
@@ -15,8 +15,8 @@ export const MOCK_TRANSACTIONS: TransactionType[] = [
     transactionDatetime: '2024-01-12T09:15:00Z',
     amount: 60.0,
   },
-  { id: 5, description: 'Dining Out', transactionDatetime: '2024-01-15T19:45:00Z', amount: 45.3 },
-  { id: 6, description: 'Gas', transactionDatetime: '2024-01-18T13:20:00Z', amount: 80.0 },
+  { id: 5, description: 'Dining Out', transactionDatetime: '2024-01-15T19:45:00Z', amount: -45.3 },
+  { id: 6, description: 'Gas', transactionDatetime: '2024-01-18T13:20:00Z', amount: -80.0 },
   {
     id: 7,
     description: 'Streaming Services',

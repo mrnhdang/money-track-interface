@@ -1,8 +1,27 @@
-import { Box, Card, Flex, Heading, Image, Separator, Stack, Text } from '@chakra-ui/react';
-import { Button } from '../ui/button';
+import {
+  Box,
+  Button,
+  Card,
+  Flex,
+  Heading,
+  HStack,
+  Image,
+  Separator,
+  Stack,
+  Text,
+} from '@chakra-ui/react';
 import { DataListItem, DataListRoot } from '../ui/data-list';
+import EditMemberDialog from './EditMemberDialog';
+import { Authentication } from '../../hook/useAuthentication';
+import { DialogRoot, DialogTrigger } from '../ui/dialog';
+import React from 'react';
 
-const MemberInfo = () => {
+interface MemberInfoProps {
+  authentication?: Authentication;
+  setAuthentication: (authentication: Authentication) => void;
+}
+
+const MemberInfo = ({ authentication, setAuthentication }: MemberInfoProps) => {
   return (
     <Stack width={'full'} gap={'5'}>
       <Heading size="2xl">Profile</Heading>
@@ -35,7 +54,19 @@ const MemberInfo = () => {
               </DataListRoot>
             </Card.Body>
             <Card.Footer>
-              <Button>Update information</Button>
+              <HStack gap={10}>
+                <DialogRoot size={'lg'}>
+                  <DialogTrigger asChild>
+                    <Button variant="outline" size={'lg'}>
+                      Update information
+                    </Button>
+                  </DialogTrigger>
+                  <EditMemberDialog
+                    authentication={authentication}
+                    setAuthentication={setAuthentication}
+                  />
+                </DialogRoot>
+              </HStack>
             </Card.Footer>
           </Box>
         </Card.Root>

@@ -1,6 +1,6 @@
 import { Flex, Heading, HStack, IconButton, Separator, Stack, Table } from '@chakra-ui/react';
 import { Button } from '../ui/button';
-import { AddIcon, Alert, Editable, RepeatIcon } from '@chakra-ui/icons';
+import { AddIcon, Alert, CheckIcon, DeleteIcon, Editable, RepeatIcon } from '@chakra-ui/icons';
 import React, { Dispatch, SetStateAction, useCallback, useState } from 'react';
 import { ValueChangeDetails } from '@zag-js/editable';
 import { TransactionType } from '../../app/track/page';
@@ -39,7 +39,6 @@ const Transaction = ({ transactions, setTransactions }: TransactionProps) => {
             isEditId +
             ' is edited. Please save your change before editing another transaction. Thank you.',
         });
-        setIsEditId(undefined);
       } else {
         setTempTransactions({ ...tempTransactions, [field]: value?.value, id: id });
         setIsEditId(id);
@@ -72,6 +71,7 @@ const Transaction = ({ transactions, setTransactions }: TransactionProps) => {
       transactionDatetime: undefined,
       amount: 0.0,
     });
+    setUiState({ loading: false });
   };
 
   const removeTransaction = (id?: number) => {
@@ -122,6 +122,7 @@ const Transaction = ({ transactions, setTransactions }: TransactionProps) => {
                     width={'fit-content'}
                     textAlign={'start'}
                     defaultValue={item?.amount?.toString()}
+                    color={item?.amount > 0 ? 'teal' : 'red'}
                     onValueChange={(e: ValueChangeDetails) => {
                       if (item?.id) onChangeTempTransactions(item?.id, 'amount', e);
                     }}
@@ -133,19 +134,19 @@ const Transaction = ({ transactions, setTransactions }: TransactionProps) => {
                 <Table.Cell textAlign="end">
                   <Flex gap={1} justify={'flex-end'}>
                     {isNewTransactionCreated || isEditId === item?.id ? (
-                      <Button onClick={onSave} variant={'solid'} colorPalette={'teal'}>
-                        Save
-                      </Button>
+                      <IconButton onClick={onSave} variant={'solid'} colorPalette={'teal'}>
+                        <CheckIcon />
+                      </IconButton>
                     ) : (
                       <div style={{ width: '64px' }}></div>
                     )}
-                    <Button
+                    <IconButton
                       onClick={() => removeTransaction(item?.id)}
                       variant={'outline'}
                       colorPalette={'red'}
                     >
-                      Remove
-                    </Button>
+                      <DeleteIcon />
+                    </IconButton>
                   </Flex>
                 </Table.Cell>
               </Table.Row>
@@ -186,7 +187,7 @@ const Transaction = ({ transactions, setTransactions }: TransactionProps) => {
             width={'fit-content'}
             size={'xl'}
             colorPalette={'teal'}
-            disabled={isNewTransaction}
+            disabled={isNewTransaction || !!uiState?.error}
             onClick={addNewRowTransaction}
           >
             <AddIcon w={6} h={6} />

@@ -3,6 +3,10 @@ import React, { createContext, useContext, useState } from 'react';
 
 export type Authentication = {
   email?: string;
+  username?: string;
+  image?: string;
+  qr?: string;
+  balance?: number;
   password?: string;
 };
 
