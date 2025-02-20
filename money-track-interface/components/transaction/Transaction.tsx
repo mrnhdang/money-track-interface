@@ -1,9 +1,8 @@
 import { Flex, Heading, HStack, IconButton, Separator, Stack, Table } from '@chakra-ui/react';
-import { Button } from '../ui/button';
 import { AddIcon, Alert, CheckIcon, DeleteIcon, Editable, RepeatIcon } from '@chakra-ui/icons';
 import React, { Dispatch, SetStateAction, useCallback, useState } from 'react';
 import { ValueChangeDetails } from '@zag-js/editable';
-import { TransactionType } from '../../app/track/page';
+
 import { MOCK_TRANSACTIONS } from '../../mock';
 import {
   PaginationItems,
@@ -12,6 +11,7 @@ import {
   PaginationRoot,
 } from '../ui/pagination';
 import useUiState from '../../hook/useUiState';
+import { TransactionType } from '../../app/page';
 
 interface TransactionProps {
   transactions: TransactionType[];
@@ -165,7 +165,7 @@ const Transaction = ({ transactions, setTransactions }: TransactionProps) => {
   ]);
 
   return (
-    <Stack width={{ md: '100vh', lg: 'full' }} gap="5">
+    <Stack width={{ lg: 'full' }} gap="5">
       {/*Title*/}
       <Flex alignItems={'center'}>
         <Heading size="2xl" width={'fit-content'}>
