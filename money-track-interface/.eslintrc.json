@@ -5,16 +5,39 @@
     "eslint:recommended",
     "plugin:prettier/recommended"
   ],
-  "plugins": ["prettier"],
+  "plugins": [
+    "prettier",
+    "import"
+  ],
   "rules": {
     "prettier/prettier": "error",
     "padding-line-between-statements": [
       "error",
-      { "blankLine": "always", "prev": "const", "next": "const" },
-      { "blankLine": "always", "prev": "let", "next": "let" },
-      { "blankLine": "always", "prev": "var", "next": "var" },
-      { "blankLine": "always", "prev": "function", "next": "function" },
-      { "blankLine": "always", "prev": "block", "next": "function" }
+      {
+        "blankLine": "always",
+        "prev": "const",
+        "next": "const"
+      },
+      {
+        "blankLine": "always",
+        "prev": "let",
+        "next": "let"
+      },
+      {
+        "blankLine": "always",
+        "prev": "var",
+        "next": "var"
+      },
+      {
+        "blankLine": "always",
+        "prev": "function",
+        "next": "function"
+      },
+      {
+        "blankLine": "always",
+        "prev": "block",
+        "next": "function"
+      }
     ]
   }
 }

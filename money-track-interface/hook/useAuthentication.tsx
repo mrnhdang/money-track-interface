@@ -8,16 +8,23 @@ export type Authentication = {
   qr?: string;
   balance?: number;
   password?: string;
+  role?: string;
 };
 
 export type AuthContextValue = {
   authentication?: Authentication;
   setAuthentication: (e?: Authentication) => void;
+  setToken: (token: string) => void;
+  getToken: () => void;
+  removeToken: () => void;
 };
 
 const AuthenticationState = createContext<AuthContextValue>({
   authentication: undefined,
   setAuthentication: () => {},
+  setToken: () => {},
+  getToken: () => {},
+  removeToken: () => {},
 });
 
 export const useAuthentication = () => {
@@ -30,9 +37,19 @@ const AuthenticationProvider = ({
   children: React.ReactNode;
 }>) => {
   const [authentication, setAuthentication] = useState<Authentication | undefined>();
-
+  const setToken = (token: string) => {
+    sessionStorage.setItem('token', token);
+  };
+  const getToken = () => {
+    sessionStorage.getItem('token');
+  };
+  const removeToken = () => {
+    sessionStorage.removeItem('token');
+  };
   return (
-    <AuthenticationState.Provider value={{ authentication, setAuthentication }}>
+    <AuthenticationState.Provider
+      value={{ authentication, setAuthentication, setToken, removeToken, getToken }}
+    >
       {children}
     </AuthenticationState.Provider>
   );

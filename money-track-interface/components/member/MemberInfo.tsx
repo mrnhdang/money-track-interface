@@ -23,7 +23,10 @@ interface MemberInfoProps {
 
 const MemberInfo = ({ authentication, setAuthentication }: MemberInfoProps) => {
   return (
-    <Stack width={'full'} gap={'5'}>
+    <Stack
+      width={{ base: 'fit-content', sm: 'fit-content', md: 'fit-content', lg: 'full' }}
+      gap={'5'}
+    >
       <Heading size="2xl">Profile</Heading>
       <Separator width={'full'} marginBottom={'2'} />
       <Flex

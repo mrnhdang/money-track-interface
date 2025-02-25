@@ -6,9 +6,17 @@ import { PasswordInput } from '../ui/password-input';
 import { Button } from '../ui/button';
 import React from 'react';
 import { useAuthentication } from '../../hook/useAuthentication';
+import axios from 'axios';
+import useUiState from '../../hook/useUiState';
+import { Alert } from '@chakra-ui/icons';
+import { useRouter } from 'next/navigation';
+
+const API_ROUTE = process.env.LOCALHOST;
 
 const LoginForm = () => {
-  const { authentication, setAuthentication } = useAuthentication();
+  const { uiState, setUiState } = useUiState();
+  const { authentication, setAuthentication, setToken } = useAuthentication();
+  const router = useRouter();
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAuthentication({
@@ -17,14 +25,34 @@ const LoginForm = () => {
     });
   };
 
-  const onSubmit = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onSubmit = async (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    console.log(e);
-    console.log(authentication);
+    setUiState({ loading: true });
+    let response, error;
+    try {
+      response = await axios.post(API_ROUTE + '/auth/login', authentication);
+      const { token } = response?.data;
+      setToken(token);
+      setAuthentication(response?.data?.authentication);
+      router.push('/');
+    } catch (e) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
+      error = e?.response?.data?.message;
+    } finally {
+      setUiState({ loading: false, error });
+    }
   };
+  console.log(authentication);
 
   return (
-    <Flex justify={'center'} alignItems={'center'} minWidth={'100%'} minHeight="100vh">
+    <Flex
+      justify={'center'}
+      alignItems={'center'}
+      minWidth={'100%'}
+      minHeight="100vh"
+      p={{ base: 3 }}
+    >
       <Box
         as="form"
         justifyItems={'center'}
@@ -50,6 +78,18 @@ const LoginForm = () => {
           </Text>
           <Text textStyle={'2xl'}>Welcome to huda&#39;s money track</Text>
         </div>
+
+        {/*Alert*/}
+        {uiState?.error && (
+          <Alert.Root status="error">
+            <Alert.Indicator />
+            <Alert.Content>
+              <Alert.Title>Error</Alert.Title>
+              <Alert.Description>{uiState?.error}</Alert.Description>
+            </Alert.Content>
+          </Alert.Root>
+        )}
+
         <Field label={'Email'}>
           <Input name={'email'} placeholder={'Enter your email'} p={1} onChange={onChange} />
         </Field>

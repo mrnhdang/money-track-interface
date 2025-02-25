@@ -165,7 +165,10 @@ const Transaction = ({ transactions, setTransactions }: TransactionProps) => {
   ]);
 
   return (
-    <Stack width={{ lg: 'full' }} gap="5">
+    <Stack
+      width={{ base: 'fit-content', sm: 'fit-content', md: 'fit-content', lg: 'full' }}
+      gap="5"
+    >
       {/*Title*/}
       <Flex alignItems={'center'}>
         <Heading size="2xl" width={'fit-content'}>

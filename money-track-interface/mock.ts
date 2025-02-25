@@ -1,4 +1,4 @@
-import { TransactionType } from './app/track/page';
+import { TransactionType } from './app/page';
 
 export const MOCK_TRANSACTIONS: TransactionType[] = [
   { id: 1, description: 'Rent', transactionDatetime: '2024-01-01T00:00:00Z', amount: 1200.0 },

@@ -1,14 +1,22 @@
 'use client';
 
-import { Box, Flex, Input, Link, Separator, Text } from '@chakra-ui/react';
-import { Field } from '../ui/field';
+import { Box, Flex, Link, Separator, Text } from '@chakra-ui/react';
+import { Field, Input } from '@chakra-ui/react';
 import { PasswordInput } from '../ui/password-input';
 import { Button } from '../ui/button';
 import React from 'react';
 import { useAuthentication } from '../../hook/useAuthentication';
+import axios from 'axios';
+import useUiState from '../../hook/useUiState';
+import { Alert } from '@chakra-ui/icons';
+import { useRouter } from 'next/navigation';
+
+const API_ROUTE = process.env.LOCALHOST;
 
 const RegisterForm = () => {
+  const { uiState, setUiState } = useUiState();
   const { authentication, setAuthentication } = useAuthentication();
+  const router = useRouter();
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAuthentication({
@@ -16,14 +24,36 @@ const RegisterForm = () => {
       [e.target.name]: e.target.value,
     });
   };
-  const onSubmit = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onSubmit = async (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    console.log(e);
-    console.log(authentication);
+    setUiState({ loading: true });
+    let response, error;
+    try {
+      setAuthentication({
+        ...authentication,
+        role: 'MEMBER',
+      });
+      console.log(authentication);
+      response = await axios.post(API_ROUTE + '/auth/register', authentication);
+      console.log(response?.data);
+      router.push('/login');
+    } catch (e) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
+      error = e?.response?.data?.message;
+    } finally {
+      setUiState({ loading: false, error });
+    }
   };
 
   return (
-    <Flex justify={'center'} alignItems={'center'} minWidth={'100%'} minHeight="100vh">
+    <Flex
+      justify={'center'}
+      alignItems={'center'}
+      minWidth={'100%'}
+      minHeight="100vh"
+      p={{ base: 3 }}
+    >
       <Box
         as={'form'}
         justifyItems={'center'}
@@ -41,16 +71,32 @@ const RegisterForm = () => {
           Register
         </Text>
 
-        <Field label={'Username'}>
+        {/*Alert*/}
+        {uiState?.error && (
+          <Alert.Root status="error">
+            <Alert.Indicator />
+            <Alert.Content>
+              <Alert.Title>Error</Alert.Title>
+              <Alert.Description>{uiState?.error}</Alert.Description>
+            </Alert.Content>
+          </Alert.Root>
+        )}
+
+        <Field.Root>
+          <Field.Label>Username</Field.Label>
           <Input name={'username'} placeholder={'Enter your username'} p={1} onChange={onChange} />
-        </Field>
-        <Field label={'Image'}>
+          <Field.ErrorText>This is an error text</Field.ErrorText>
+        </Field.Root>
+        <Field.Root>
+          <Field.Label>Image</Field.Label>
           <Input name={'image'} placeholder={'Enter your image'} p={1} onChange={onChange} />
-        </Field>
-        <Field label={'Qr code'}>
+        </Field.Root>
+        <Field.Root>
+          <Field.Label>Qr code</Field.Label>
           <Input name={'qr'} placeholder={'Enter your Qr'} p={1} onChange={onChange} />
-        </Field>
-        <Field label={'Balance'}>
+        </Field.Root>
+        <Field.Root>
+          <Field.Label>Balance</Field.Label>
           <Input
             name={'balance'}
             type={'number'}
@@ -58,18 +104,20 @@ const RegisterForm = () => {
             p={1}
             onChange={onChange}
           />
-        </Field>
-        <Field label={'Email'}>
+        </Field.Root>
+        <Field.Root>
+          <Field.Label>Email</Field.Label>
           <Input name={'email'} placeholder={'Enter your email'} p={1} onChange={onChange} />
-        </Field>
-        <Field label={'Password'}>
+        </Field.Root>
+        <Field.Root>
+          <Field.Label>Password</Field.Label>
           <PasswordInput
             name={'password'}
             placeholder={'Enter your password'}
             p={1}
             onChange={onChange}
           />
-        </Field>
+        </Field.Root>
 
         <div style={{ width: '100%' }}>
           <Button type={'submit'} colorPalette={'teal'} width={'100%'}>

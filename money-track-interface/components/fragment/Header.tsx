@@ -1,8 +1,11 @@
+'use client';
 import { Flex, IconButton } from '@chakra-ui/react';
 import { Button } from '../ui/button';
 import { FaDollarSign } from 'react-icons/fa6';
+import { useRouter } from 'next/navigation';
 
 const Header = () => {
+  const router = useRouter();
   return (
     <Flex
       as="header"
@@ -16,14 +19,21 @@ const Header = () => {
       width="100%"
       style={{ zIndex: 1500 }}
     >
-      <IconButton size={'xl'} p={1} colorPalette="teal" aria-label="Call support" rounded="full">
+      <IconButton
+        size={'xl'}
+        p={1}
+        colorPalette="teal"
+        aria-label="Call support"
+        rounded="full"
+        onClick={() => router.push('/')}
+      >
         <FaDollarSign />
       </IconButton>
       <Flex gap={1} justify={'flex-end'} width={'100%'}>
-        <Button colorPalette="teal" variant="solid">
+        <Button colorPalette="teal" variant="solid" onClick={() => router?.push('/login')}>
           LOGIN
         </Button>
-        <Button colorPalette="teal" variant="outline">
+        <Button colorPalette="teal" variant="outline" onClick={() => router?.push('/register')}>
           REGISTER
         </Button>
       </Flex>
