@@ -31,8 +31,9 @@ const LoginForm = () => {
     let response, error;
     try {
       response = await axios.post(API_ROUTE + '/auth/login', authentication);
-      const { token } = response?.data;
+      const { token, id } = response?.data;
       setToken(token);
+      sessionStorage.setItem('id', id);
       setAuthentication(response?.data?.authentication);
       router.push('/');
     } catch (e) {

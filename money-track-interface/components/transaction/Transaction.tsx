@@ -1,8 +1,17 @@
-import { Flex, Heading, HStack, IconButton, Separator, Stack, Table } from '@chakra-ui/react';
+import {
+  EmptyState,
+  Flex,
+  Heading,
+  HStack,
+  IconButton,
+  Separator,
+  Stack,
+  Table,
+  VStack,
+} from '@chakra-ui/react';
 import { AddIcon, Alert, CheckIcon, DeleteIcon, Editable, RepeatIcon } from '@chakra-ui/icons';
 import React, { Dispatch, SetStateAction, useCallback, useState } from 'react';
 import { ValueChangeDetails } from '@zag-js/editable';
-
 import { MOCK_TRANSACTIONS } from '../../mock';
 import {
   PaginationItems,
@@ -224,6 +233,21 @@ const Transaction = ({ transactions, setTransactions }: TransactionProps) => {
         </Table.Header>
         {renderTransactionsTable()}
       </Table.Root>
+
+      {!transactions ||
+        (transactions?.length === 0 && (
+          <EmptyState.Root size={'lg'}>
+            <EmptyState.Content>
+              <EmptyState.Indicator>{/*<LuShoppingCart />*/}</EmptyState.Indicator>
+              <VStack textAlign="center">
+                <EmptyState.Title>Your cart is empty</EmptyState.Title>
+                <EmptyState.Description>
+                  Explore our products and add items to your cart
+                </EmptyState.Description>
+              </VStack>
+            </EmptyState.Content>
+          </EmptyState.Root>
+        ))}
 
       <PaginationRoot count={transactions ? transactions?.length * 5 : 0} pageSize={5} page={1}>
         <HStack wrap="wrap">

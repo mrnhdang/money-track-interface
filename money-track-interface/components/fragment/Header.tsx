@@ -17,7 +17,7 @@ const Header = () => {
       paddingX={2}
       alignItems="center"
       width="100%"
-      style={{ zIndex: 1500 }}
+      style={{ zIndex: 1000 }}
     >
       <IconButton
         size={'xl'}

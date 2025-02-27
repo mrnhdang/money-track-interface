@@ -10,30 +10,55 @@ import {
 } from '../ui/dialog';
 import { Authentication } from '../../hook/useAuthentication';
 import { Field } from '../ui/field';
-import { PasswordInput } from '../ui/password-input';
-import React from 'react';
+import React, { Dispatch, SetStateAction, useCallback, useState } from 'react';
+import { UiStateType } from '../../hook/useUiState';
+import api from '../../hook/api';
 
 interface EditMemberDialogProps {
   authentication?: Authentication;
   setAuthentication: (authentication: Authentication) => void;
+  setUiState: Dispatch<SetStateAction<UiStateType>>;
+  fetchMemberInformation: () => void;
 }
 
-const EditMemberDialog = ({ authentication, setAuthentication }: EditMemberDialogProps) => {
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setAuthentication({
-      ...authentication,
-      [e.target.name]: e.target.value,
-    });
-  };
-  const onSubmit = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    console.log(e);
-    console.log(authentication);
+const EditMemberDialog = ({
+  authentication,
+  setAuthentication,
+  setUiState,
+  fetchMemberInformation,
+}: EditMemberDialogProps) => {
+  const [editMember, setEditMember] = useState({ memberId: sessionStorage.getItem('id') });
+  const onChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setEditMember({
+        ...editMember,
+        [e.target.name]: e.target.value,
+      });
+    },
+    [editMember],
+  );
+
+  const onSubmit = async () => {
+    setUiState({ loading: true });
+    let error;
+    try {
+      await api.patch('/auth/profile/edit', editMember);
+      fetchMemberInformation();
+    } catch (e) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
+      error = e?.response?.data?.message;
+      console.log(e);
+    } finally {
+      setUiState({ loading: false, error });
+    }
   };
 
-  const editProfileForm = () => {
+  console.log(authentication);
+
+  const editProfileForm = useCallback(() => {
     return (
-      <Box as={'form'} onSubmit={onSubmit} style={{ gap: 2 }}>
+      <Box style={{ gap: 2 }}>
         <Field label={'Username'}>
           <Input
             name={'username'}
@@ -78,20 +103,13 @@ const EditMemberDialog = ({ authentication, setAuthentication }: EditMemberDialo
             p={1}
             defaultValue={authentication?.email}
             onChange={onChange}
-          />
-        </Field>
-        <Field label={'Password'}>
-          <PasswordInput
-            name={'password'}
-            placeholder={'Enter your password'}
-            p={1}
-            defaultValue={authentication?.password}
-            onChange={onChange}
+            disabled
           />
         </Field>
       </Box>
     );
-  };
+  }, [authentication, onChange]);
+
   return (
     <DialogContent>
       <DialogHeader>
@@ -102,7 +120,7 @@ const EditMemberDialog = ({ authentication, setAuthentication }: EditMemberDialo
         <DialogActionTrigger asChild>
           <Button variant="outline">Cancel</Button>
         </DialogActionTrigger>
-        <Button>Save</Button>
+        <Button onClick={() => onSubmit()}>Save</Button>
       </DialogFooter>
       <DialogCloseTrigger />
     </DialogContent>

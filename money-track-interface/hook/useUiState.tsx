@@ -1,4 +1,5 @@
 import { useState } from 'react';
+
 export type UiStateType = {
   loading: boolean;
   error?: string;

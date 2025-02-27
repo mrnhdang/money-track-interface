@@ -2,6 +2,7 @@
 import React, { createContext, useContext, useState } from 'react';
 
 export type Authentication = {
+  id?: number;
   email?: string;
   username?: string;
   image?: string;
@@ -36,12 +37,14 @@ const AuthenticationProvider = ({
 }: Readonly<{
   children: React.ReactNode;
 }>) => {
-  const [authentication, setAuthentication] = useState<Authentication | undefined>();
+  const [authentication, setAuthentication] = useState<Authentication | undefined>({
+    role: 'MEMBER',
+  });
   const setToken = (token: string) => {
     sessionStorage.setItem('token', token);
   };
   const getToken = () => {
-    sessionStorage.getItem('token');
+    return sessionStorage.getItem('token');
   };
   const removeToken = () => {
     sessionStorage.removeItem('token');

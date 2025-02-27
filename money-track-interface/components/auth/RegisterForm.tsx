@@ -1,7 +1,6 @@
 'use client';
 
-import { Box, Flex, Link, Separator, Text } from '@chakra-ui/react';
-import { Field, Input } from '@chakra-ui/react';
+import { Box, Field, Flex, Input, Link, Separator, Text } from '@chakra-ui/react';
 import { PasswordInput } from '../ui/password-input';
 import { Button } from '../ui/button';
 import React from 'react';
@@ -27,15 +26,10 @@ const RegisterForm = () => {
   const onSubmit = async (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     setUiState({ loading: true });
-    let response, error;
+    let error;
     try {
-      setAuthentication({
-        ...authentication,
-        role: 'MEMBER',
-      });
-      console.log(authentication);
-      response = await axios.post(API_ROUTE + '/auth/register', authentication);
-      console.log(response?.data);
+      // not use api.ts because of token validation
+      await axios.post(API_ROUTE + '/auth/register', authentication);
       router.push('/login');
     } catch (e) {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
