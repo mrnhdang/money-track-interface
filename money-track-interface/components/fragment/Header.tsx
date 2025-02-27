@@ -3,9 +3,12 @@ import { Flex, IconButton } from '@chakra-ui/react';
 import { Button } from '../ui/button';
 import { FaDollarSign } from 'react-icons/fa6';
 import { useRouter } from 'next/navigation';
+import { useAuthentication } from '../../hook/useAuthentication';
 
 const Header = () => {
   const router = useRouter();
+  const { authentication, setAuthentication, removeToken } = useAuthentication();
+
   return (
     <Flex
       as="header"
@@ -30,12 +33,25 @@ const Header = () => {
         <FaDollarSign />
       </IconButton>
       <Flex gap={1} justify={'flex-end'} width={'100%'}>
-        <Button colorPalette="teal" variant="solid" onClick={() => router?.push('/login')}>
-          LOGIN
-        </Button>
-        <Button colorPalette="teal" variant="outline" onClick={() => router?.push('/register')}>
-          REGISTER
-        </Button>
+        {!authentication?.id ? (
+          <>
+            <Button colorPalette="teal" variant="solid" onClick={() => router?.push('/login')}>
+              LOGIN
+            </Button>
+            <Button colorPalette="teal" variant="outline" onClick={() => router?.push('/register')}>
+              REGISTER
+            </Button>
+          </>
+        ) : (
+          <Button
+            onClick={() => {
+              removeToken();
+              setAuthentication({ role: 'MEMBER' });
+            }}
+          >
+            LogOut
+          </Button>
+        )}
       </Flex>
     </Flex>
   );

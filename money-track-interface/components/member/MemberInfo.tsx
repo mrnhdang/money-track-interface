@@ -122,7 +122,13 @@ const MemberInfo = ({
               <Card.Body>
                 <DataListRoot orientation="horizontal">
                   <Heading size="xl">Balance</Heading>
-                  <Text fontWeight={'bold'} color={'teal'} textStyle={'4xl'}>
+                  <Text
+                    fontWeight={'bold'}
+                    color={
+                      !!authentication?.balance && authentication?.balance >= 0 ? 'teal' : 'red'
+                    }
+                    textStyle={'4xl'}
+                  >
                     {authentication?.balance}
                   </Text>
                 </DataListRoot>

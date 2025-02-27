@@ -27,7 +27,7 @@ const EditMemberDialog = ({
   setUiState,
   fetchMemberInformation,
 }: EditMemberDialogProps) => {
-  const [editMember, setEditMember] = useState({ memberId: sessionStorage.getItem('id') });
+  const [editMember, setEditMember] = useState({ id: sessionStorage.getItem('id') });
   const onChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setEditMember({
