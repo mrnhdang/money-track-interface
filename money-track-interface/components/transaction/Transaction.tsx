@@ -1,3 +1,4 @@
+'use client';
 import {
   EmptyState,
   Flex,
@@ -10,9 +11,7 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { AddIcon, Alert, CheckIcon, DeleteIcon, Editable, RepeatIcon } from '@chakra-ui/icons';
-import React, { Dispatch, SetStateAction, useCallback, useState } from 'react';
-import { ValueChangeDetails } from '@zag-js/editable';
-import { MOCK_TRANSACTIONS } from '../../mock';
+import React, { Dispatch, SetStateAction, useCallback, useEffect, useState } from 'react';
 import {
   PaginationItems,
   PaginationNextTrigger,
@@ -21,25 +20,45 @@ import {
 } from '../ui/pagination';
 import useUiState from '../../hook/useUiState';
 import { TransactionType } from '../../app/page';
+import { GrTransaction } from 'react-icons/gr';
+import api from '../../hook/api';
 
 interface TransactionProps {
   transactions: TransactionType[];
   setTransactions: Dispatch<SetStateAction<TransactionType[]>>;
+  fetchMemberTransaction: (page?: number, pageSize?: number) => void;
+  fetchMemberInformation: () => void;
 }
 
-const Transaction = ({ transactions, setTransactions }: TransactionProps) => {
+const Transaction = ({
+  transactions,
+  setTransactions,
+  fetchMemberTransaction,
+  fetchMemberInformation,
+}: TransactionProps) => {
   const { uiState, setUiState } = useUiState();
-  const [tempTransactions, setTempTransactions] = useState({
+  const [tempTransactions, setTempTransactions] = useState<TransactionType>({
     id: 0,
     description: undefined,
     transactionDatetime: undefined,
     amount: 0.0,
+    memberId: sessionStorage.getItem('id'),
   });
+  const [page, setPage] = useState(0);
+  const [pageSize, setPageSize] = useState(5);
+  const [pageLength, setPageLength] = useState(1);
   const [isEditId, setIsEditId] = useState<number | undefined>(undefined);
   const [isNewTransaction, setIsNewTransaction] = useState<boolean>(false);
 
+  //TODO: Create drop down input for page size selection.
+
+  const onPageChange = (page: number) => {
+    setPage(page);
+    fetchMemberTransaction(page - 1, pageSize);
+  };
+
   const onChangeTempTransactions = useCallback(
-    (id: number, field: string, value: ValueChangeDetails) => {
+    (id: number, field: string, value: string) => {
       if (isEditId && id !== isEditId) {
         setUiState({
           loading: false,
@@ -49,7 +68,7 @@ const Transaction = ({ transactions, setTransactions }: TransactionProps) => {
             ' is edited. Please save your change before editing another transaction. Thank you.',
         });
       } else {
-        setTempTransactions({ ...tempTransactions, [field]: value?.value, id: id });
+        setTempTransactions({ ...tempTransactions, [field]: value, id: id });
         setIsEditId(id);
       }
     },
@@ -66,27 +85,65 @@ const Transaction = ({ transactions, setTransactions }: TransactionProps) => {
       },
       ...prev, // Creating a new array instead of mutating prev directly
     ]);
+    setTempTransactions({
+      ...tempTransactions,
+      id: 0, // Ensuring unique ID
+      description: 'Enter Description',
+      transactionDatetime: new Date().toISOString(),
+      amount: 0.0,
+    });
     setIsNewTransaction(true);
   };
 
-  const onSave = () => {
-    //TODO: Call API
-    setIsNewTransaction(false);
-    setIsEditId(undefined);
-    setTransactions(MOCK_TRANSACTIONS);
-    setTempTransactions({
-      id: 0,
-      description: undefined,
-      transactionDatetime: undefined,
-      amount: 0.0,
-    });
-    setUiState({ loading: false });
-  };
+  const onSave = useCallback(
+    async (id: number) => {
+      setIsNewTransaction(false);
+      setIsEditId(undefined);
 
-  const removeTransaction = (id?: number) => {
-    setTransactions((prev) => prev?.filter((transaction) => transaction.id !== id));
-    // TODO: Call API
-  };
+      let error;
+      let response;
+      try {
+        if (id && id !== 0) {
+          response = await api.patch('/api/transaction/' + id, tempTransactions);
+        } else {
+          response = await api.post('/api/transaction', tempTransactions);
+        }
+        console.log(response?.data);
+        fetchMemberTransaction();
+        fetchMemberInformation();
+      } catch (e) {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
+        error = e?.response?.data?.message;
+        console.log(e);
+      } finally {
+        setUiState({ loading: false, error });
+      }
+    },
+    [fetchMemberInformation, fetchMemberTransaction, setUiState, tempTransactions],
+  );
+
+  const removeTransaction = useCallback(
+    async (id?: number) => {
+      setTransactions((prev) => prev?.filter((transaction) => transaction.id !== id));
+      let error;
+      try {
+        if (id && id !== 0) {
+          await api.delete('/api/transaction/' + id);
+        }
+        fetchMemberTransaction();
+        fetchMemberInformation();
+      } catch (e) {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
+        error = e?.response?.data?.message;
+        console.log(e);
+      } finally {
+        setUiState({ loading: false, error });
+      }
+    },
+    [fetchMemberInformation, fetchMemberTransaction, setTransactions, setUiState],
+  );
 
   const renderTransactionsTable = useCallback(() => {
     if (transactions?.length > 0) {
@@ -102,13 +159,14 @@ const Transaction = ({ transactions, setTransactions }: TransactionProps) => {
                     name={'description'}
                     width={'fit-content'}
                     textAlign={'start'}
-                    defaultValue={item?.description}
-                    onValueChange={(e: ValueChangeDetails) => {
-                      if (item?.id) onChangeTempTransactions(item?.id, 'description', e);
-                    }}
+                    defaultValue={item?.description ? item?.description : ''}
                   >
                     <Editable.Preview />
-                    <Editable.Input />
+                    <Editable.Input
+                      onChange={(e) => {
+                        onChangeTempTransactions(item?.id, 'description', e.target.value);
+                      }}
+                    />
                   </Editable.Root>
                 </Table.Cell>
                 <Table.Cell>
@@ -116,13 +174,15 @@ const Transaction = ({ transactions, setTransactions }: TransactionProps) => {
                     name={'transactionDatetime'}
                     width={'fit-content'}
                     textAlign={'start'}
-                    defaultValue={item?.transactionDatetime}
-                    onValueChange={(e: ValueChangeDetails) => {
-                      if (item?.id) onChangeTempTransactions(item?.id, 'transactionDatetime', e);
-                    }}
+                    defaultValue={item?.transactionDatetime ? item?.transactionDatetime : ''}
                   >
                     <Editable.Preview />
-                    <Editable.Input />
+                    <Editable.Input
+                      type={'datetime-local'}
+                      onChange={(e) => {
+                        onChangeTempTransactions(item?.id, 'transactionDatetime', e.target.value);
+                      }}
+                    />
                   </Editable.Root>
                 </Table.Cell>
                 <Table.Cell>
@@ -130,20 +190,25 @@ const Transaction = ({ transactions, setTransactions }: TransactionProps) => {
                     name={'amount'}
                     width={'fit-content'}
                     textAlign={'start'}
-                    defaultValue={item?.amount?.toString()}
+                    defaultValue={item?.amount ? item?.amount?.toString() : '0'}
                     color={item?.amount > 0 ? 'teal' : 'red'}
-                    onValueChange={(e: ValueChangeDetails) => {
-                      if (item?.id) onChangeTempTransactions(item?.id, 'amount', e);
-                    }}
                   >
                     <Editable.Preview />
-                    <Editable.Input />
+                    <Editable.Input
+                      onChange={(e) => {
+                        onChangeTempTransactions(item?.id, 'amount', e.target.value);
+                      }}
+                    />
                   </Editable.Root>
                 </Table.Cell>
                 <Table.Cell textAlign="end">
                   <Flex gap={1} justify={'flex-end'}>
                     {isNewTransactionCreated || isEditId === item?.id ? (
-                      <IconButton onClick={onSave} variant={'solid'} colorPalette={'teal'}>
+                      <IconButton
+                        onClick={() => onSave(item?.id)}
+                        variant={'solid'}
+                        colorPalette={'teal'}
+                      >
                         <CheckIcon />
                       </IconButton>
                     ) : (
@@ -173,6 +238,26 @@ const Transaction = ({ transactions, setTransactions }: TransactionProps) => {
     transactions,
   ]);
 
+  useEffect(() => {
+    const countPageLength = async () => {
+      let error;
+      try {
+        const response = await api.get(
+          '/api/transaction/countTotalPage/' + sessionStorage.getItem('id'),
+        );
+        setPageLength(response?.data);
+      } catch (e) {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
+        error = e?.response?.data?.message;
+        console.log(e);
+      } finally {
+        setUiState({ loading: false, error });
+      }
+    };
+    countPageLength();
+  }, [setUiState]);
+
   return (
     <Stack
       width={{ base: 'fit-content', sm: 'fit-content', md: 'fit-content', lg: 'full' }}
@@ -190,7 +275,9 @@ const Transaction = ({ transactions, setTransactions }: TransactionProps) => {
             size={'xl'}
             colorPalette={'teal'}
             variant={'outline'}
-            onClick={() => {}}
+            onClick={() => {
+              fetchMemberTransaction();
+            }}
           >
             <RepeatIcon w={6} h={6} />
           </IconButton>
@@ -238,18 +325,25 @@ const Transaction = ({ transactions, setTransactions }: TransactionProps) => {
         (transactions?.length === 0 && (
           <EmptyState.Root size={'lg'}>
             <EmptyState.Content>
-              <EmptyState.Indicator>{/*<LuShoppingCart />*/}</EmptyState.Indicator>
+              <EmptyState.Indicator>
+                <GrTransaction />
+              </EmptyState.Indicator>
               <VStack textAlign="center">
-                <EmptyState.Title>Your cart is empty</EmptyState.Title>
+                <EmptyState.Title>Your transaction is empty</EmptyState.Title>
                 <EmptyState.Description>
-                  Explore our products and add items to your cart
+                  Create and manage your transactions.
                 </EmptyState.Description>
               </VStack>
             </EmptyState.Content>
           </EmptyState.Root>
         ))}
 
-      <PaginationRoot count={transactions ? transactions?.length * 5 : 0} pageSize={5} page={1}>
+      <PaginationRoot
+        count={pageLength ? pageLength : 0}
+        pageSize={5}
+        page={page}
+        onPageChange={(e) => onPageChange(e.page)}
+      >
         <HStack wrap="wrap">
           <PaginationPrevTrigger />
           <PaginationItems />

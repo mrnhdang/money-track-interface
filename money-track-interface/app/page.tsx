@@ -11,10 +11,11 @@ import useUiState from '../hook/useUiState';
 import api from '../hook/api';
 
 export type TransactionType = {
-  id?: number;
+  id: number;
   description?: string;
   transactionDatetime?: string;
   amount: number;
+  memberId?: number | string | null;
 };
 
 export default function Home() {
@@ -27,7 +28,6 @@ export default function Home() {
     let response, error;
     try {
       response = await api.get('/auth/profile/' + sessionStorage.getItem('id'));
-      console.log(response?.data);
       setAuthentication(response?.data);
     } catch (e) {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -39,10 +39,43 @@ export default function Home() {
     }
   }, [setAuthentication, setUiState]);
 
+  const fetchMemberTransaction = useCallback(
+    async (page?: number, pageSize?: number) => {
+      setUiState({ loading: true });
+      let response, error;
+      try {
+        if (page || pageSize) {
+          response = await api.get(
+            '/api/transaction?memberId=' +
+              sessionStorage.getItem('id') +
+              '&pageNumber=' +
+              page +
+              '&pageSize=' +
+              pageSize,
+          );
+        } else {
+          response = await api.get('/api/transaction?memberId=' + sessionStorage.getItem('id'));
+        }
+        setTransactions(response?.data);
+      } catch (e) {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
+        error = e?.response?.data?.message;
+        console.log(e);
+      } finally {
+        setUiState({ loading: false, error });
+      }
+    },
+    [setUiState],
+  );
+
   useEffect(() => {
     fetchMemberInformation();
   }, [fetchMemberInformation]);
 
+  useEffect(() => {
+    fetchMemberTransaction();
+  }, [fetchMemberTransaction]);
   return (
     <>
       <Header />
@@ -69,7 +102,12 @@ export default function Home() {
             setUiState={setUiState}
             fetchMemberInformation={fetchMemberInformation}
           />
-          <Transaction transactions={transactions} setTransactions={setTransactions} />
+          <Transaction
+            transactions={transactions}
+            setTransactions={setTransactions}
+            fetchMemberTransaction={fetchMemberTransaction}
+            fetchMemberInformation={fetchMemberInformation}
+          />
         </Stack>
       </div>
     </>

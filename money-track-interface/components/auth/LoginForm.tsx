@@ -44,7 +44,6 @@ const LoginForm = () => {
       setUiState({ loading: false, error });
     }
   };
-  console.log(authentication);
 
   return (
     <Flex

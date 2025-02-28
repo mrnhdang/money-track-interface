@@ -1,3 +1,4 @@
+'use client';
 import { Box, Button, Input } from '@chakra-ui/react';
 import {
   DialogActionTrigger,
@@ -53,8 +54,6 @@ const EditMemberDialog = ({
       setUiState({ loading: false, error });
     }
   };
-
-  console.log(authentication);
 
   const editProfileForm = useCallback(() => {
     return (
